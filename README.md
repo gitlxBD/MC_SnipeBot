@@ -11,8 +11,11 @@ A bot designed to efficiently snipe Minecraft usernames.
 2. Download rustup-init.exe
 3. Run the executable as administrator
 4. In the command prompt that opens, type:
+   
    2
+   
    Y
+   
    1
 
 ------------------------------------------
