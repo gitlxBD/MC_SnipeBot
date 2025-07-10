@@ -32,7 +32,7 @@ struct SnipeApp {
     ms_offset: i64,
     custom_release_time: String,
     current_utc_time: DateTime<Utc>,
-    burst_count: u8, // Ajouté pour le nombre de requêtes en rafale
+    burst_count: u8, 
 }
 
 impl SnipeApp {
@@ -46,7 +46,7 @@ impl SnipeApp {
             ms_offset: 20,
             custom_release_time: String::new(),
             current_utc_time: Utc::now(),
-            burst_count: 5, // Valeur par défaut
+            burst_count: 5, 
         }
     }
 
@@ -124,26 +124,22 @@ impl SnipeApp {
         }
 
         if !successful_syncs.is_empty() {
-            // Trier par latence croissante
             successful_syncs.sort_by(|a, b| a.latency.cmp(&b.latency));
             
-            // Prendre le serveur avec la plus faible latence
             let best_sync = &successful_syncs[0];
             
             self.log(format!("🏆 Best server selected: {} (latency: {}ms)", 
                            best_sync.source, best_sync.latency.as_millis()));
             
-            // Vérifier la cohérence avec les autres serveurs
             let time_differences: Vec<i64> = successful_syncs.iter()
                 .map(|sync| (sync.time.timestamp_millis() - best_sync.time.timestamp_millis()).abs())
                 .collect();
             
             let max_difference = time_differences.iter().max().unwrap_or(&0);
             
-            if *max_difference > 2000 { // Plus de 2 secondes de différence
+            if *max_difference > 2000 { 
                 self.log(format!("⚠️ Large time difference detected ({}ms), using average instead", max_difference));
                 
-                // Utiliser la moyenne si les différences sont trop importantes
                 let avg_timestamp = time_samples.iter()
                     .map(|t| t.timestamp_millis())
                     .sum::<i64>() / time_samples.len() as i64;
@@ -159,7 +155,6 @@ impl SnipeApp {
                 self.log(format!("📊 Time sync completed: {} sources, using best server ({}ms max diff)", 
                                successful_syncs.len(), max_difference));
                 
-                // Utiliser le serveur avec la plus faible latence
                 return Ok(best_sync.time);
             }
         }
@@ -228,7 +223,6 @@ impl SnipeApp {
             return;
         }
 
-        // Validate custom release time format
         if DateTime::parse_from_rfc3339(&format!("{}Z", self.custom_release_time)).is_err() {
             self.log("❌ Invalid time format! Use YYYY-MM-DDTHH:MM:SS");
             return;
@@ -285,7 +279,7 @@ impl SnipeApp {
                                 ms_offset: 0,
                                 custom_release_time: String::new(),
                                 current_utc_time: Utc::now(),
-                                burst_count: 0, // Ne pas utiliser le compte de rafale dans l'app temporaire
+                                burst_count: 0, 
                             };                            
                             match temp_app.get_reliable_time().await {
                                 Ok(synced_time) => {
@@ -361,7 +355,6 @@ impl SnipeApp {
                             msg: format!("🚀 LAUNCHING SNIPE ATTACK NOW! ({}ms before release)", ms_offset),
                         });
                         
-                        // Calculate precise attack time
                         let precise_attack_time = DateTime::from_timestamp_millis(first_request_time_ms)
                             .unwrap_or(current_time);
                         
@@ -459,7 +452,6 @@ impl App for SnipeApp {
         
         // Reset status when not running
         if !self.is_running {
-            // Check if we need to reset status from "In progress..."
             if self.status == "In progress..." {
                 self.status = "Ready".to_string();
             }
