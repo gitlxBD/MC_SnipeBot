@@ -33,9 +33,9 @@ A bot designed to efficiently snipe Minecraft usernames.
 ------------------------------------------
 
 1. Open a new command prompt
-2. Navigate to the mc_snipbot_v4 folder:
+2. Navigate to the mc_snipbot folder:
 
-   cd path\to\mc_snipbot_v4
+   cd path\to\mc_snipbot
 
 3. Compile the project in release mode:
 
@@ -62,7 +62,7 @@ A bot designed to efficiently snipe Minecraft usernames.
 
 1. Launch the sniping tool:
 
-   mc_snipbot_v4\target\release\snipebot.exe
+   mc_snipbot\target\release\snipebot.exe
 
    (You can also double-click snipebot.exe from the file explorer)
 
