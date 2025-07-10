@@ -1,0 +1,20 @@
+
+[package]
+name = "snipebot"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+eframe = "0.25"
+egui = "0.25"
+chrono = { version = "0.4", features = ["serde"] }
+reqwest = { version = "0.11", features = ["json"] }
+serde_json = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+
+# Fix for Windows API issues
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = [
+    "winuser", "windef", "wingdi", "wincon", "handleapi", 
+    "processenv", "winbase", "libloaderapi", "errhandlingapi"
+] }
